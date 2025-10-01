@@ -21,6 +21,7 @@ def genetic_algorithm(d, params):
     mutation_rate = 0.05
     crossover_rate = 0.8
     generation_max = 10
+    local_search_rate = 0.0
     
     # Fitness - linear ranking
     selective_pressure = 1.2
@@ -44,7 +45,8 @@ def genetic_algorithm(d, params):
     for _ in range(pop_size - len(population)):
         candidate, fs = random_solution(d)
 
-        candidate, fs, _ = local_search.vnd_first_improvement(d, candidate, fs, max_k)
+        if random.random() <= local_search_rate:
+            candidate, fs, _ = local_search.vnd_first_improvement(d, candidate, fs, max_k)
 
         individual = Individual(candidate, fs)
         population.append(individual)
@@ -82,12 +84,14 @@ def genetic_algorithm(d, params):
                 mutation_swap(child_two, mutation_rate)
 
                 fs = tsp.full_eval(d, child_one)
-                # child_one, fs, _ = local_search.vnd_first_improvement(d, child_one, fs, max_k)
+                if random.random() <= local_search_rate:
+                    child_one, fs, _ = local_search.vnd_first_improvement(d, child_one, fs, max_k)
 
                 descendents.append(Individual(child_one, fs))
 
                 fs = tsp.full_eval(d, child_two)
-                # child_two, fs, _ = local_search.vnd_first_improvement(d, child_two, fs, max_k)       
+                if random.random() <= local_search_rate:
+                    child_two, fs, _ = local_search.vnd_first_improvement(d, child_two, fs, max_k)       
 
                 descendents.append(Individual(child_two, fs))
 
@@ -129,7 +133,7 @@ def genetic_algorithm(d, params):
             ind_star = Individual(population[index_best].candidate[:], population[index_best].fs)
 
         # Print generations
-        # print(f"{it}\t{ind_star.fs}\t{population[index_best].fs}\n")
+        print(f"{it}\t{ind_star.fs}\t{population[index_best].fs}\n")
 
         # ---
 
