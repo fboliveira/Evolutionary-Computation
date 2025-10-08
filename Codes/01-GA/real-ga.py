@@ -112,9 +112,11 @@ for g in range(geracoes):
         
         # D1 = alpha * P1 + (1 - alpha) * P2
         descendente1 = []
-        # D2 = alpha * P2 + (1 - alpha) * P1
+        # D2 = alpha * P2> + (1 - alpha) * P1
         descendente2 = []
 
+        # [3.5 2.8 4.9]
+        # [5.8 4.2 3.7]
         for i in range(tamanho_cromossomos):
             v1 = alpha * progenitor1[i] + (1 - alpha) * progenitor2[i]
             v2 = alpha * progenitor2[i] + (1 - alpha) * progenitor1[i]
