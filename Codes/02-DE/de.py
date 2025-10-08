@@ -44,7 +44,7 @@ def selecionar_indices(Np, target):
 
 def mutacao(F, min, max, xr0, xr1, xr2):
 
-    trial = []
+    mutante = []
     
     for i in range(len(xr1)):
         # Gerar perturbação - diferença
@@ -54,9 +54,9 @@ def mutacao(F, min, max, xr0, xr1, xr2):
         valor = xr0[i] + F * diferenca
 
         valor = reparar_valor(valor, min, max)
-        trial.append(valor)
+        mutante.append(valor)
 
-    return trial
+    return mutante
 
 def reparar_valor(valor, min, max):
     if valor < min:
@@ -123,15 +123,15 @@ if __name__ == '__main__':
             xr2 = populacao[r2][0]
 
             # Trial
-            trial = mutacao(F, min, max, xr0, xr1, xr2)
+            mutante = mutacao(F, min, max, xr0, xr1, xr2)
 
             # Crossover
-            resultante = crossover(D, Cr, trial, target)
-            custo_resultante = problem.calcular_fo_sum_square(resultante)
+            trial = crossover(D, Cr, mutante, target)
+            custo_trial = problem.calcular_fo_sum_square(trial)
 
             # Selecao
-            if (custo_resultante <= custo_target):
-                nova_populacao.append((resultante, custo_resultante))
+            if (custo_trial <= custo_target):
+                nova_populacao.append((trial, custo_trial))
             else:
                 nova_populacao.append((target.copy(), custo_target))
 
