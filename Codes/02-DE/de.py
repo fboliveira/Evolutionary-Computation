@@ -1,6 +1,5 @@
 import random
-import math
-from Codes.base import problem
+import problem
 
 def criar_populacao_inicial(Np, D, min, max):
 
@@ -14,30 +13,32 @@ def criar_populacao_inicial(Np, D, min, max):
             valor = random.random() * (max - min) + min
             individuo.append(valor)
 
-        populacao.append((individuo, math.inf))
+        populacao.append(individuo)
 
     return populacao
 
 def selecionar_indices(Np, target):
 
-    r0, r1, r2 = target
+    r0 = target
+    r1 = target
+    r2 = target
 
     while True:
         r0 = random.randint(0, Np - 1)
 
-        if r0 != i:
+        if r0 != target:
             break
 
     while True:
         r1 = random.randint(0, Np - 1)
 
-        if r1 != r0:
+        if r1 != r0 and r1 != target:
             break
 
     while True:
         r2 = random.randint(0, Np - 1)
 
-        if r2 != r1 and r2 != r0:
+        if r2 != r1 and r2 != r0 and r2 != target:
             break
 
     return r0, r1, r2
@@ -66,19 +67,19 @@ def reparar_valor(valor, min, max):
 
     return valor
 
-def crossover(D, Cr, trial, target):
+def crossover(D, Cr, mutante, target):
 
     jrand = random.randint(0, D - 1)
 
-    resultante = []
+    trial = []
 
     for i in range(D):
         if random.random() <= Cr or i == jrand:
-            resultante.append(trial[i])
+            trial.append(mutante[i])
         else:
-            resultante.append(target[i])
+            trial.append(target[i])
 
-    return resultante
+    return trial
 
 if __name__ == '__main__':
 
@@ -88,19 +89,19 @@ if __name__ == '__main__':
     D = 100
 
     # Criterio de parada
-    gmax = 100
-    # Tamanho da populacao
-    Np = 30
-    # Coeficiente de mutacao
-    F = 0.1
+    gmax = 1000
+    # Tamanho da população
+    Np = 100
+    # Coeficiente de mutação
+    F = 0.4
     # Coeficiente de Crossover
-    Cr = 0.9
+    Cr = 0.7
 
-    # Criacao da populacao inicial - X
-    populacao = criar_populacao_inicial(Np, D, min, max)
+    # Criacao da população inicial - X
+    populacao_inicial = criar_populacao_inicial(Np, D, min, max)
 
-    # Avaliar a populacao inicial
-    problem.avaliar_populacao(populacao)
+    # Avaliar a população inicial
+    populacao = problem.avaliar_populacao(populacao_inicial)
 
     # Enquanto o critério de parada não for atingido
     for g in range(gmax):
@@ -122,10 +123,11 @@ if __name__ == '__main__':
             xr1 = populacao[r1][0]
             xr2 = populacao[r2][0]
 
-            # Trial
+            # Mutante
             mutante = mutacao(F, min, max, xr0, xr1, xr2)
 
             # Crossover
+            # u0
             trial = crossover(D, Cr, mutante, target)
             custo_trial = problem.calcular_fo_sum_square(trial)
 
@@ -148,5 +150,5 @@ if __name__ == '__main__':
     melhor_individuo = melhor[0]
     melhor_custo = melhor[1]
 
-    print(f'Melhor custo final: {melhor_custo}')
     print(f'Melhor Indivíduo: {melhor_individuo}')
+    print(f'Melhor custo final: {melhor_custo}')
