@@ -13,7 +13,7 @@ def main(args):
 
     params = Params(args) 
     
-            # read command line parameters
+    # read command line parameters
     d, coord = util.read_tsp(params.instance)
     if params.seed:
         random.seed(params.seed)  # change/remove to allow new random behavior (and solutions)
