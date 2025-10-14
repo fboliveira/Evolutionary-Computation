@@ -97,11 +97,11 @@ if __name__ == '__main__':
     # Coeficiente de Crossover
     Cr = 0.7
 
-    # Criacao da população inicial - X
+    # Criação da população inicial - X
     populacao_inicial = criar_populacao_inicial(Np, D, min, max)
 
     # Avaliar a população inicial
-    populacao = problem.avaliar_populacao(populacao_inicial)
+    populacao, _, _ = problem.avaliar_populacao(populacao_inicial)
 
     # Enquanto o critério de parada não for atingido
     for g in range(gmax):
