@@ -37,7 +37,7 @@ def selecionar_melhores(mu : int, populacao : list, descendentes : list, estrate
         descendentes = populacao + descendentes
 
     descendentes.sort(key=lambda item : item[1])
-    del descendentes[mu:]
+    del descendentes[mu:] # [0, mu-1]
 
     return descendentes
 
@@ -49,13 +49,13 @@ if __name__ == '__main__':
     D = 100
 
     # Tamanho da população
-    mu = 100
+    mu = 1
     # Total de descentes
-    esLambda = 100
+    esLambda = 1
     # Número máximo de gerações
     genMax = 100
     # Taxa de Mutação
-    taxaMutacao = 0.1
+    taxaMutacao = 0.7
     # Estrategia de seleção: 1 para mu+lambda; 2 para mu, lambda
     estrategiaSelecao = 1
 
@@ -64,6 +64,8 @@ if __name__ == '__main__':
 
     # Avaliar a população inicial - P
     populacao, melhor_custo, melhor_individuo = problem.avaliar_populacao(populacao_inicial)
+
+    print(f'População inicial - Melhor custo até agora: { melhor_custo }')
 
     # Enquanto o critério de parada não for atingido
     for g in range(genMax):
@@ -84,10 +86,9 @@ if __name__ == '__main__':
                     melhor_custo = custo_descendente
                     melhor_individuo = descendente.copy()
         
-        # Selecionar os melhores conforme a estratégia
+        # Selecionar os melhores indivíduos conforme a estratégia
         populacao = selecionar_melhores(mu, populacao, descendentes, estrategiaSelecao)
         print(f'Geração: {g} - Melhor custo até agora: { melhor_custo }')
-
 
     # Imprimir o melhor resultado:
     print(f'\nMelhor Indivíduo: {melhor_individuo}\n')
