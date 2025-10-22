@@ -4,12 +4,14 @@ import random
 import sys
 from params import Params
 import ga
+import aco
+import es
 
 def main(args):
     args = ["main.py"]
     args.append("./datasets/att48.tsp")
     args.append("-algorithm")
-    args.append("GA")
+    args.append("ACO")
 
     params = Params(args) 
     
@@ -33,9 +35,9 @@ def main(args):
     if params.algorithm == "GA": # FBO
         s, fs, t, data = ga.genetic_algorithm(d, params)
     elif params.algorithm == "ACO": # FBO
-        pass
+        s, fs, t, data = aco.ACO(d, params)
     elif params.algorithm == "ES": # FBO
-        pass
+        s, fs, t, data = es.ES(d, params)
 
     # write outputs (if allowed)
     if params.chart:
