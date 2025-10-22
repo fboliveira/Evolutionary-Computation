@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from bokeh.plotting import figure, show, save, output_file
+# from bokeh.plotting import figure, show, save, output_file
 
 
 def read_tsp(file_path):
@@ -75,19 +75,19 @@ def preprocess_data(data):
             i += 1
 
 
-def plot_sol(s, coord, file_name, title="", path=False):
-    """"Print a TSP solution"""
-    fig = figure(title=title)
-    i, x, y = zip(*coord)
-    fig.circle(x, y, size=8)
-    ptseq = [coord[k] for k in s]
-    if not path:
-        ptseq.append(ptseq[0])
-    i, x, y = zip(*ptseq)
-    fig.line(x, y)
+# def plot_sol(s, coord, file_name, title="", path=False):
+#     """"Print a TSP solution"""
+#     fig = figure(title=title)
+#     i, x, y = zip(*coord)
+#     fig.circle(x, y, size=8)
+#     ptseq = [coord[k] for k in s]
+#     if not path:
+#         ptseq.append(ptseq[0])
+#     i, x, y = zip(*ptseq)
+#     fig.line(x, y)
 
-    #show(fig)
-    output_file(file_name)
-    save(fig)
-    #export_png(fig, filename=file_name)
-    # fig.outpsavefig(file_name)
+#     #show(fig)
+#     output_file(file_name)
+#     save(fig)
+#     #export_png(fig, filename=file_name)
+#     # fig.outpsavefig(file_name)
